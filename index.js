@@ -1,8 +1,14 @@
-const ages = [18, 34, 67, 7, 2];
+const animals = ["tiger", "lion", "rubberduck", "bear"];
 
-const numbers = [5, 10, 15, 20];
+console.log(animals);
 
-for (let i = 0; i < numbers.length; i++) {
-  // console.log(numbers[i]);
-  console.log(numbers.at(i));
-}
+const removedElements = animals.splice(2, 1);
+
+console.log(animals);
+console.log(removedElements);
+
+animals.splice(1, 0, "shark", "moose");
+console.log(animals);
+
+animals.splice(1);
+console.log(animals);
