@@ -246,15 +246,148 @@ connect4[3][3] = "yellow";
 
 ## Loops
 
+Loops are most used together with arrays in order to loop through them and do some sort of work on them. It could be to see if something exists, change something, add elements together, draw some statistics and many other things. They are very versatile and fundamental to every program language.
+
 ### For Loop
+
+Use case: When you know the number of iterations beforehand, especially when you are working with indexes. Often used with array where the number of elements are fixed.
+
+Syntax:
+
+```js
+for (initialization; condition; update) {
+  // code to be executed in each iteration.
+}
+```
+
+- `initialization` is the point where you start your loop from.
+- `condition` is the condition that must be true in order for the loop to continue, otherwise it will terminate. This condition is checked after every iteration.
+- `update` is the update that happens after each iteration that changes the basis of the condition.
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+// Output:
+/*
+0
+1
+2
+3
+4
+*/
+```
+
+Let's take an example with an array.
+
+```js
+const numbers = [5, 10, 15, 20];
+
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
+  // console.log(numbers.at(i));
+}
+
+// Output
+/*
+5
+10
+15
+20
+*/
+```
+
+[Back to top](#javascript-arrays-and-loops)
 
 ### For..of Loop (foreach)
 
+Use case: When iterating over iterable _(mostly arrays)_ objects, most used in arrays and strings when you don't really need to know the index.
+
+Syntax:
+
+```js
+// iterable = arrays, string and other data types that can be looped through.
+for (variable of iterable) {
+  // Code to be executed in each iteration
+}
+
+const names = ["Niklas", "Henrik", "Erik", "Sofia"];
+
+for (let name of names) {
+  console.log(name);
+}
+
+// Output
+/*
+Niklas
+Henrik
+Erik
+Sofia
+*/
+```
+
+In every iteration a local variable will be created that will be assign the value of the current element we are iterating over.
+
+[Back to top](#javascript-arrays-and-loops)
+
 ### While Loop
+
+Use case: When the number of iterations is not known beforehand, a while loop might be the one you want to use. This loop will continue as long as the specified condition is true. This requires you to be careful when setting the condition because you might create a endless lopp if you don't and your computer won't like that.
+
+Syntax:
+
+```js
+while (condition) {
+  // Code to be executed in each iteration
+}
+
+let x = 1;
+
+while (x < 100) {
+  console.log(x);
+  x *= 2;
+}
+```
+
+[Back to top](#javascript-arrays-and-loops)
 
 ### Do..While Loop
 
+Use case: Very similar to `while-loop`, but it guarantees that the code inside the loop will run at least once because the condition is checked **AFTER** each iteration.
+
+Syntax:
+
+```js
+do {
+  // Code to be executed in eact iteration
+} while (condition);
+
+let x = 1;
+
+do {
+  console.log(x);
+  x *= 2;
+} while (x < 100);
+```
+
+[Back to top](#javascript-arrays-and-loops)
+
 ### For..in Loop (Objects)
+
+Use case: When you want to iterate over the properties of an object. Don't use this with arrays or other iterables.
+
+Syntax:
+
+```js
+for (variable in object) {
+  // code to be executec in each iteration
+}
+```
+
+More on these when we are talking about objects in later lectures.
+
+[Back to top](#javascript-arrays-and-loops)
 
 ## Array Methods
 
