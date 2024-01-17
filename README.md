@@ -34,6 +34,9 @@
   - [map](#map)
   - [slice](#slice)
   - [splice](#splice)
+  - [reduce](#reduce)
+  - [sort](#sort)
+  - [Method Chaining](#chaining-array-methods)
 
 </details>
 
@@ -562,6 +565,8 @@ map( callback(element, index) ) => array
 
 The `map()` method creates a new array populated with a modified version of the iterated object according to a callback function. On each iteration the callback function is invoked on the current element that we iterate over, and returns the modified element.
 
+The arguments that comes with the callback is the element that we are currently iterating over and the index value of the current element we are iterating over.
+
 ```js
 const numbers = [2, 4, 6, 8, 10];
 
@@ -638,6 +643,85 @@ When looking at the logs we can see that the array has been modifed in place, an
 
 ### reduce
 
+reduce( callback( accumlator, currentValue, currentIndex), initialValue ) => single value depending on the callback function
+
+The `reduce()` method is just to transform any given array in to a single value by applying the callack function on every element.
+
+This method is a little bit more complicated than the rest of the array methods. Here is a breakdown.
+
+- `callback`: The provided callback function
+  - `accumulator`: Accumulates the result of the previous callback invocation or the `initialValue` if provided.
+  - `currentValue`: The current element that is being iterated over.
+  - `currentIndex`: The index of the current element being iterated over. (This one is seldom used)
+- `initalValue`: (optional), the initial value for the `accumulator`. If it's not provided the first element in the array is used as the initial value of the `accumulator`.
+
+The method works by, depending on the `callback`, add to the `accumulator` in each iteration, that in the end results in a single value _(or object)_ that is returned by the reduce method.
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+
+console.log(sum); // 15;
+```
+
+In this case we have an array of numbers that we want to add together to a sum. The reducer method is invoked on this array and the `callback` is executed on each element. The `initialValue` is set to 0, by us, and is used as the starting value of the `accumulator`. In the first iteration the `accumulator` starts at 0 and the `currentValue` _(1 in this case)_ is added to it. In the next iteration the `accumulator` now is 1. The `callback` is invoked and the `currenValue`, _(now 2)_ is again added to the `accumulator`. Then we repeat this till every element has been iterated over and we should end up with the value 15 in the `accumulator`, and that's the value that is then returned byt the reducer.
+
+So in short, the `accumulator` is a variable that accumulates the result of each callback invocation. It holds the running total and in the end the final result.
+
+[Back to top](#javascript-arrays-and-loops)
+
 ### sort
 
-### Chaning array methods
+sort( compareFunction? ) => void
+
+`sort()` is a method that let's you sort the elements of an array in a default way or in a custom way if it's provided with `compareFunction`. The default way is that it converts the elements to strings and sorts them alphabetically. Now, this is usually not the behaviour we want because often we have more complex objects inside an array that can not just be converted to strings. These cases requires a `comparFunction` in order to sort numerical or non-string values. Remember that the `sort()` methods sorts the array in-place, nothing is returned. Let's break this method down.
+
+- `compareFunction`: An optional argument that defines the sorting order of the elements. If it's omitted the default sorting is based on string Unicode code points.
+
+```js
+const fruits = ["banana", "orange", "apple", "mango"];
+
+fruits.sort();
+console.log(fruits); // [apple, banana, mango, orange]
+```
+
+Default sorting applied here, it's in an alphabetical order. How do we use a `compareFunction` then?
+
+```js
+const numbers = [10, 5, 8, 15, 3];
+
+numbers.sort((a,b) => {
+  reuturn a - b
+})
+
+console.log(numbers); // [3, 5, 8, 10, 15];
+```
+
+In this example the compare function comes as an inline arrow function. It takes two arguments that represents the current value `a`, and the next value `b`. In the code block we compare this numbers and return a negative value if `a` should be sorted before `b`, a positive value if `a` should be sorted after `b` and zero if the `a` and `b` should remain in place.
+
+This is the essence of the compare function, it must return either a negative, positive or a zero value and that is was make of the sorting.
+
+[Back to top](#javascript-arrays-and-loops)
+
+### Chaining array methods
+
+Chaining is something that is very useful and provides clean and readable code if used in a correct way.
+
+Only methods that returns something can be used in chain of methods. The methods can return different data types but the order of the methods in the chain then needs to be correct. Otherwise it won't work. For instance, if you have an array, you can `filter` it and the `map` it. That works beacause `map` returns an array that we can `filter`, which in turns returns an array that we can save in a variable.
+
+```js
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const modified = numbers.filter((number) => number % 2 === 0).map((number) => (number *= 2));
+
+console.log(modified); // [4, 8, 12, 16, 20];
+```
+
+In this case we have an array with numbers that we first filter so it only contains even numbers, and then we map it by multiplying every number with 2. The result is a new array with only even numbers that have been doubled.
+
+You could built on this chaining and add more methods but it quickly becomes complicated if you don't know what you are doing. This is an easy examle that shows the concept.
+
+[Back to top](#javascript-arrays-and-loops)
